@@ -3,12 +3,11 @@ package com.waracle.cakemgr.dto;
 import java.io.Serializable;
 
 
+
 public class CakeDto implements Serializable {
 
     private Integer employeeId;
     private String title;
-
-
 
     private String description;
     private String image;
@@ -38,4 +37,6 @@ public class CakeDto implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public void setEmployeeId(Integer employeeId) { this.employeeId = employeeId; }
 }
