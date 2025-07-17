@@ -6,7 +6,6 @@ public final class ApiPaths {
         // private constructor to prevent instantiation
     }
 
-    public static final String BASE = "/api/";
-    public static final String CAKES = BASE + "/cakes";
-    public static final String CAKE_BY_ID = CAKES + "/{id}";
+    public static final String BASE =  "/cakes";
+    public static final String CAKE_BY_ID = "/{id}";
 }

@@ -11,7 +11,9 @@ public interface CakesService {
 
     Optional<CakeEntity> getCakeById(Integer id);
 
-    CakeEntity saveCake(CakeEntity cake);
+    CakeEntity createCake(CakeEntity cake);
 
-    void deleteCake(Integer id);
+    Optional<CakeEntity> updateCake(Integer id, CakeEntity newCake);
+
+    boolean  deleteCake(Integer id);
 }

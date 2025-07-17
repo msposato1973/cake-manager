@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CakeMapper {
 
-        public CakeDto toDto(CakeEntity entity) {
+        public static CakeDto toDto(CakeEntity entity) {
             CakeDto dto = new CakeDto();
             dto.setEmployeeId(entity.getEmployeeId());
             dto.setTitle(entity.getTitle());
@@ -17,7 +17,7 @@ public class CakeMapper {
             return dto;
         }
 
-        public CakeEntity toEntity(CakeDto dto) {
+        public static CakeEntity toEntity(CakeDto dto) {
             CakeEntity entity = new CakeEntity();
             entity.setEmployeeId(dto.getEmployeeId());
             entity.setTitle(dto.getTitle());

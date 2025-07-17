@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 import java.io.Serializable;
-
+import lombok.*;
 @Entity
 @Table(
         name = "cake",
@@ -13,6 +13,9 @@ import java.io.Serializable;
                 @UniqueConstraint(columnNames = "title")
         }
 )
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,35 +34,5 @@ public class CakeEntity implements Serializable {
     @Column(name = "LAST_NAME", unique = false, nullable = false, length = 300)
     private String image;
 
-    public Integer getEmployeeId() {
-        return employeeId;
-    }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }
