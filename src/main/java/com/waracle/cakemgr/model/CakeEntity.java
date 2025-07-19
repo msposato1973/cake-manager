@@ -9,6 +9,8 @@ import lombok.*;
 @Table(name = "cake")
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class CakeEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +28,7 @@ public class CakeEntity implements Serializable {
 
     @Column(name = "last_name")
     private String image;
+
 
 
 }

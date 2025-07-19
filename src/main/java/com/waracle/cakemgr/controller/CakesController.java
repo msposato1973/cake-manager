@@ -60,8 +60,8 @@ public class CakesController {
 
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CakeEntity> create(@RequestBody CakeEntity cake) {
-        CakeEntity saved = cakesService.createCake(cake);
+    public ResponseEntity<CakeEntity> create(@RequestBody CakeDto cake) {
+        CakeEntity saved = cakesService.createCake(CakeMapper.toEntity(cake));
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -73,8 +73,8 @@ public class CakesController {
     }
 
     @PutMapping(path=ApiPaths.CAKE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CakeEntity> update(@PathVariable Integer id, @RequestBody CakeEntity cake) {
-        return cakesService.updateCake(id, cake)
+    public ResponseEntity<CakeEntity> update(@PathVariable Integer id, @RequestBody CakeDto cake) {
+        return cakesService.updateCake(id, CakeMapper.toEntity(cake))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

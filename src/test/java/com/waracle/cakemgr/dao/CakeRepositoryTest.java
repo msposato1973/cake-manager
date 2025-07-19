@@ -46,7 +46,7 @@ public class CakeRepositoryTest {
 
         boolean exists = cakeRepository.existsByTitleAndDescriptionAndImage(title, description, image);
 
-        
+
         assertThat(exists).isFalse();
         Mockito.verify(cakeRepository).existsByTitleAndDescriptionAndImage(title, description, image);
     }
