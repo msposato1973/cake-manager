@@ -5,13 +5,16 @@ import com.waracle.cakemgr.dto.CakeDto;
 import com.waracle.cakemgr.mapper.CakeMapper;
 import com.waracle.cakemgr.model.CakeEntity;
 import com.waracle.cakemgr.service.CakesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,16 +24,20 @@ public class CakesController {
 
     private final CakesService cakesService;
 
+    @Autowired
     public CakesController(CakesService cakeService) {
         this.cakesService = cakeService;
     }
 
-    @GetMapping(ApiPaths.BASE)
-    public List<CakeDto> findAll() {
+    @GetMapping(path="/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findAll() {
         LOGGER.info("START - findAll {..}");
         List<CakeEntity> cakes = cakesService.getAllCakes();
         LOGGER.info("END - findAll {..} - Total Cakes: {}", cakes.size());
-        return  buildResponse(cakesService.getAllCakes());
+        List<CakeDto> listCakeDtos = buildResponse(cakes);
+
+        return (!listCakeDtos.isEmpty()) ? buildResponseEntity(listCakeDtos)
+                : new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 
     }
 
@@ -51,27 +58,28 @@ public class CakesController {
     }
 
 
-    @PostMapping
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CakeEntity> create(@RequestBody CakeEntity cake) {
         CakeEntity saved = cakesService.createCake(cake);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @GetMapping(ApiPaths.CAKE_BY_ID)
+    @GetMapping(path=ApiPaths.CAKE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CakeEntity> getCakeById(@PathVariable Integer id) {
         return this.cakesService.getCakeById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping(ApiPaths.CAKE_BY_ID)
+    @PutMapping(path=ApiPaths.CAKE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CakeEntity> update(@PathVariable Integer id, @RequestBody CakeEntity cake) {
         return cakesService.updateCake(id, cake)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping(ApiPaths.CAKE_BY_ID)
+    @DeleteMapping(path=ApiPaths.CAKE_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         if (cakesService.deleteCake(id)) {
             return ResponseEntity.noContent().build();

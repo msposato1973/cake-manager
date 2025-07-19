@@ -58,3 +58,6 @@ Please provide your version of this project as a git repository (e.g. Github, Bi
 A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
+
+# Memory Database
+http://localhost:8080/console/

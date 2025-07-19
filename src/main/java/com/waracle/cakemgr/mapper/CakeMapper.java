@@ -10,7 +10,7 @@ public class CakeMapper {
 
         public static CakeDto toDto(CakeEntity entity) {
             CakeDto dto = new CakeDto();
-            dto.setEmployeeId(entity.getEmployeeId());
+            dto.setEmployeeId(entity.getId());
             dto.setTitle(entity.getTitle());
             dto.setDescription(entity.getDescription());
             dto.setImage(entity.getImage());
@@ -19,7 +19,7 @@ public class CakeMapper {
 
         public static CakeEntity toEntity(CakeDto dto) {
             CakeEntity entity = new CakeEntity();
-            entity.setEmployeeId(dto.getEmployeeId());
+            entity.setId(dto.getEmployeeId());
             entity.setTitle(dto.getTitle());
             entity.setDescription(dto.getDescription());
             entity.setImage(dto.getImage());
