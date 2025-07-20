@@ -1,5 +1,6 @@
 package com.waracle.cakemgr.controller;
 
+import com.waracle.cakemgr.BaseTest;
 import com.waracle.cakemgr.dto.CakeDto;
 import com.waracle.cakemgr.mapper.CakeMapper;
 import com.waracle.cakemgr.model.CakeEntity;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CakesControllerTest {
+class CakesControllerTest  extends BaseTest {
 
     @Mock
     private CakesService cakesService;
@@ -32,7 +33,7 @@ class CakesControllerTest {
 
     @Test
     void testFindAll() {
-        CakeEntity mockCake = new CakeEntity(1, "Cake1", "Description1", "Image1");
+        CakeEntity mockCake = getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1");
         when(cakesService.getAllCakes()).thenReturn(List.of(mockCake));
 
         ResponseEntity<?> response = cakesController.findAll();
@@ -57,7 +58,7 @@ class CakesControllerTest {
 
     @Test
     void testCreate() {
-        CakeDto cakeDto = CakeDto.builder().description("Description1").title("Cake1").image("Image1").build();
+        CakeDto cakeDto = getBuildMockCakeDto("Cake1", "Description1", "Image1") ;
         CakeEntity mockCake = CakeMapper.toEntity(cakeDto);
         when(cakesService.createCake(any(CakeEntity.class))).thenReturn(mockCake);
 
@@ -71,7 +72,7 @@ class CakesControllerTest {
 
     @Test
     void testUpdate() {
-        CakeDto cakeDto = getBuildMockCakeEntity("UpdatedCake", "UpdatedDescription", "UpdatedImage");
+        CakeDto cakeDto = getBuildMockCakeDto("UpdatedCake", "UpdatedDescription", "UpdatedImage");
         CakeEntity updatedCake = CakeMapper.toEntity(cakeDto);
         when(cakesService.updateCake(eq(1), any(CakeEntity.class))).thenReturn(Optional.of(updatedCake));
 
@@ -94,11 +95,4 @@ class CakesControllerTest {
         verify(cakesService, times(1)).deleteCake(1);
     }
 
-    private CakeDto getBuildMockCakeEntity(String title, String description, String image) {
-        return CakeDto.builder()
-                .title(title)
-                .description(description)
-                .image(image)
-                .build();
-    }
 }

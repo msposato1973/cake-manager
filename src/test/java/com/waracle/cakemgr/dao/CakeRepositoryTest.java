@@ -1,5 +1,6 @@
 package com.waracle.cakemgr.dao;
 
+import com.waracle.cakemgr.BaseTest;
 import com.waracle.cakemgr.model.CakeEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -10,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class CakeRepositoryTest {
+public class CakeRepositoryTest extends BaseTest {
 
     @Mock
     private CakeRepository cakeRepository;

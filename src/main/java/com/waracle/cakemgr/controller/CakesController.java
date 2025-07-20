@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping(ApiPaths.BASE)
 public class CakesController {
@@ -28,6 +31,7 @@ public class CakesController {
     public CakesController(CakesService cakeService) {
         this.cakesService = cakeService;
     }
+
 
     @GetMapping(path="/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll() {
@@ -45,7 +49,7 @@ public class CakesController {
 
         List<CakeDto> cakeDtos = allCakes.stream()
                 .map(CakeMapper::toDto)
-                .toList();
+                .collect(Collectors.toList());
 
         if (cakeDtos.isEmpty()) return List.of();
 

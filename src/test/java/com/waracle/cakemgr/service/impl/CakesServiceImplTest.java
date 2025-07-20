@@ -1,6 +1,7 @@
 package com.waracle.cakemgr.service.impl;
 
 
+import com.waracle.cakemgr.BaseTest;
 import com.waracle.cakemgr.dao.CakeRepository;
 import com.waracle.cakemgr.model.CakeEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CakesServiceImplTest {
+class CakesServiceImplTest extends BaseTest {
 
     @Mock
     private CakeRepository cakeRepository;
@@ -96,12 +97,5 @@ class CakesServiceImplTest {
         verify(cakeRepository, times(1)).deleteById(1);
     }
 
-    private CakeEntity getBuildMockCakeEntity(Integer id, String title, String description, String image) {
-        return CakeEntity.builder()
-                .id(id)
-                .title(title)
-                .description(description)
-                .image(image)
-                .build();
-    }
+
 }

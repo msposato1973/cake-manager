@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Collection;
+
 import java.util.List;
 
 @SpringBootApplication
@@ -40,5 +40,7 @@ public class CakeManagerApplication {
 			cakesService.saveAll(listCakes);
 		};
 	}
+
+
 
 }

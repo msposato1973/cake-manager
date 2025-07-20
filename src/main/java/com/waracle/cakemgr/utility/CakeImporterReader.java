@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class CakeImporterReader {
 
-     private static final Logger LOGGER = LoggerFactory.getLogger(CakeImporterReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CakeImporterReader.class);
     @Value("${cake.json.url:}")
     private String cakeJsonUrl;
 
@@ -47,17 +47,25 @@ public class CakeImporterReader {
                         String fieldName = parser.getCurrentName();
                         parser.nextToken(); // Move to value
                         switch (fieldName) {
-                            case "title" -> cake.setTitle(parser.getText());
-                            case "desc" -> cake.setDescription(parser.getText());
-                            case "image" -> cake.setImage(parser.getText());
-                            case "employeeId" -> {
+                            case "title":
+                                cake.setTitle(parser.getText());
+                                break;
+                            case "desc":
+                                cake.setDescription(parser.getText());
+                                break;
+                            case "image":
+                                cake.setImage(parser.getText());
+                                break;
+                            case "employeeId":
                                 if (parser.getCurrentToken() == JsonToken.VALUE_NUMBER_INT) {
                                     cake.setId(parser.getIntValue());
                                 } else {
                                     throw new IllegalStateException("Expected employeeId to be an integer");
                                 }
-                            }
-                            // Ignore unknown fields
+                                break;
+                            default:
+                                parser.skipChildren();
+                                break;
                         }
                     }
                     listCakeEntity.add(cake);

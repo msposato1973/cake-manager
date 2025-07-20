@@ -59,5 +59,11 @@ A fork of this repo, or a Pull Request would be suitable.
 
 Good luck!
 
-# Memory Database
+# Cake Manager Micro Service compile:
+mvn clean spring-boot:run
+
+# Memory Database accessible on:
 http://localhost:8080/console/
+
+# Swagger UI accessible on:
+http://localhost:9090/actuator/swagger-ui/index.html
