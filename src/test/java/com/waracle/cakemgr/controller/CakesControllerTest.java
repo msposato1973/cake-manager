@@ -5,6 +5,10 @@ import com.waracle.cakemgr.dto.CakeDto;
 import com.waracle.cakemgr.mapper.CakeMapper;
 import com.waracle.cakemgr.model.CakeEntity;
 import com.waracle.cakemgr.service.CakesService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,11 +18,13 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class CakesControllerTest  extends BaseTest {
+
 
     @Mock
     private CakesService cakesService;
@@ -33,6 +39,9 @@ class CakesControllerTest  extends BaseTest {
 
     @Test
     void testFindAll() {
+
+
+
         CakeEntity mockCake = getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1");
         when(cakesService.getAllCakes()).thenReturn(List.of(mockCake));
 
@@ -41,6 +50,7 @@ class CakesControllerTest  extends BaseTest {
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
         verify(cakesService, times(1)).getAllCakes();
+ 
     }
 
     @Test
@@ -94,5 +104,7 @@ class CakesControllerTest  extends BaseTest {
         assertEquals(204, response.getStatusCodeValue());
         verify(cakesService, times(1)).deleteCake(1);
     }
+
+
 
 }

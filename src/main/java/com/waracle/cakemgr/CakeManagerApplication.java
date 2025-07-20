@@ -24,7 +24,8 @@ public class CakeManagerApplication {
 	@Autowired
 	private CakeImporterReader cakeImporterReader;
 
-	private static final Logger logger = LoggerFactory.getLogger(CakeManagerApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(new Object(){}.getClass().getEnclosingClass());
+
 
 	public static void main(String[] args) {
 		logger.info("main - CakeManagerApplication.run: begin");

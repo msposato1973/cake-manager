@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import lombok.*;
 @Entity
-@Table(name = "cake")
+@Table(name = "Employee")
 @Data
 @NoArgsConstructor
 @Builder
@@ -17,16 +17,16 @@ public class CakeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "email")
+    @Column(name = "EMAIL", nullable = false, length = 100)
     private String title;
 
-    @Column(name = "first_name")
+    @Column(name = "FIRST_NAME", nullable = false, length = 100)
     private String description;
 
-    @Column(name = "last_name")
+    @Column(name = "LAST_NAME", nullable = false, length = 300)
     private String image;
 
 

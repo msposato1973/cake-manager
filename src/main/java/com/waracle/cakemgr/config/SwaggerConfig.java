@@ -18,20 +18,22 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig  implements WebMvcConfigurer {
 
+    private static final String SECURITY_SCHEME_NAME = "bearerAuth";
+    private static final String URL = "http://localhost:8282/";
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
-                        new Server().url("http://localhost:8282/").description("Local server")
+                        new Server().url(URL).description("Local server")
                 ))
                 .info(new Info()
                         .title("Swagger Sample API's")
                         .version("1.0")
                         .description("API documentation"))
+                .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
                 .components(new Components()
-                        .addSecuritySchemes("bearerAuth",
-                                new SecurityScheme()
+                        .addSecuritySchemes(SECURITY_SCHEME_NAME, new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")))

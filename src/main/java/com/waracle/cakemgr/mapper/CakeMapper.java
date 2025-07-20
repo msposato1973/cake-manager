@@ -3,9 +3,9 @@ package com.waracle.cakemgr.mapper;
 
 import com.waracle.cakemgr.dto.CakeDto;
 import com.waracle.cakemgr.model.CakeEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CakeMapper {
 
         public static CakeDto toDto(CakeEntity entity) {

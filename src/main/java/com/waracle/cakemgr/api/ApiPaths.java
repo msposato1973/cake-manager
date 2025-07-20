@@ -1,6 +1,6 @@
 package com.waracle.cakemgr.api;
 
-public final class ApiPaths {
+public class ApiPaths {
 
     private ApiPaths() {
         // private constructor to prevent instantiation

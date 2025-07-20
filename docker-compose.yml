@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  cake-manager:
+    build: .
+    container_name: cake-manager
+    ports:
+      - "8282:8282"
+    environment:
+      - DB_URL=jdbc:hsqldb:mem:db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    restart: unless-stopped
