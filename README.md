@@ -98,15 +98,15 @@ curl -X PUT http://localhost:8282/cakes/1 -H "Content-Type: application/json" \
 curl -X DELETE http://localhost:8282/cakes/1
 
 
-# Build the application with:
-# mvn clean package -DskipTests
-# Build the Docker image with:
-# docker build -t cake-manager .
-# Run the Docker container with:
-# docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
-# To run the container with a specific database URL, use:
-# docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
-# To run the container with the default in-memory database, use:
+## Build the application with:
+## mvn clean package -DskipTests
+## Build the Docker image with:
+## docker build -t cake-manager .
+## Run the Docker container with:
+## docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
+## To run the container with a specific database URL, use:
+## docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
+## To run the container with the default in-memory database, use:
 # docker run -p 8282:8282 cake-manager
 # To run the container with a specific Java option, use:
 # docker run -p 8282:8282 -e JAVA_OPTS="-Xmx512m" cake-manager
