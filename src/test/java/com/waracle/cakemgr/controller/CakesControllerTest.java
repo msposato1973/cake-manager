@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -43,14 +44,14 @@ class CakesControllerTest  extends BaseTest {
 
 
         CakeEntity mockCake = getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1");
-        when(cakesService.getAllCakes()).thenReturn(List.of(mockCake));
+        when(cakesService.getAllCakes()).thenReturn(Arrays.asList(mockCake));
 
         ResponseEntity<?> response = cakesController.findAll();
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
         verify(cakesService, times(1)).getAllCakes();
- 
+
     }
 
     @Test
