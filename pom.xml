@@ -25,6 +25,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<lombok.version>1.18.34</lombok.version>
 		<jetty.version>9.4.44.v20210927</jetty.version>
+		<spring.boot.version>3.11.0</spring.boot.version>
 	</properties>
 
 	<dependencies>
@@ -79,6 +80,7 @@
 			<version>2.6.0</version>
 		</dependency>
 
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,20 +88,87 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.5.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.24.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.11.3</version>
+			<scope>test</scope>
+		</dependency>
+ 		<!-- Spring Security -->
+
+		<!-- 🔹 JWT (JJWT) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.12.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.12.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+
+		<!-- 🔹 Lombok (facilita la scrittura di POJO e log) -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>cake-manager</finalName>
+		<finalName>${project.name}</finalName>
 		<plugins>
 
 			<!-- Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>${spring.boot.version}</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<layers enabled="true" />
+					<jvmArguments>-Xms256m -Xmx512m</jvmArguments>
 				</configuration>
 			</plugin>
 
@@ -110,15 +179,6 @@
 				<version>3.2.5</version>
 				<configuration>
 					<argLine>-Xshare:off</argLine>
-				</configuration>
-			</plugin>
-
-			<!-- Spring Boot Plugin -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<jvmArguments>-Xshare:off</jvmArguments>
 				</configuration>
 			</plugin>
 

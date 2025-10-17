@@ -2,7 +2,7 @@ package com.waracle.cakemgr.controller;
 
 import com.waracle.cakemgr.api.*;
 import com.waracle.cakemgr.dto.CakeDto;
-import com.waracle.cakemgr.mapper.CakeMapper;
+import com.waracle.cakemgr.mapper.CakeMapperService;
 import com.waracle.cakemgr.model.CakeEntity;
 import com.waracle.cakemgr.service.CakesService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,14 +31,18 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(ApiPaths.BASE)
 @Tag(name = "Cakes", description = "Cake management APIs")
-public class CakesController {
+public class CakesController extends  BaseController{
     private static final Logger LOGGER = LoggerFactory.getLogger(CakesController.class);
 
     private final CakesService cakesService;
 
+    private final CakeMapperService cakeMapperService;
+
+
     @Autowired
-    public CakesController(CakesService cakeService) {
+    public CakesController(CakesService cakeService, CakeMapperService cakeMapperService) {
         this.cakesService = cakeService;
+        this.cakeMapperService = cakeMapperService;
     }
 
 
@@ -56,30 +60,11 @@ public class CakesController {
         LOGGER.info("START - findAll {..}");
         List<CakeEntity> cakes = cakesService.getAllCakes();
         LOGGER.info("END - findAll {..} - Total Cakes: {}", cakes.size());
-        List<CakeDto> listCakeDtos = buildResponse(cakes);
 
-        return (!listCakeDtos.isEmpty()) ? buildResponseEntity(listCakeDtos)
+        return (!cakes.isEmpty()) ? buildResponseEntity(cakeMapperService.toDtoList(cakes))
                 : new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 
     }
-
-    private List<CakeDto> buildResponse(List<CakeEntity> allCakes) {
-
-        List<CakeDto> cakeDtos = allCakes.stream()
-                .map(CakeMapper::toDto)
-                .collect(Collectors.toList());
-
-        if (cakeDtos.isEmpty()) return List.of();
-
-        LOGGER.info("Cakes found: {}", cakeDtos.size());
-        if (cakeDtos.size() == 1) return List.of(cakeDtos.get(0));
-
-        LOGGER.info("Multiple cakes found, returning first one.");
-
-        return  cakeDtos;
-    }
-
-
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create a new cake", description = "Adds a new cake to the system.",
@@ -91,7 +76,9 @@ public class CakesController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<CakeEntity> create(@RequestBody CakeDto cake) {
-        CakeEntity saved = cakesService.createCake(CakeMapper.toEntity(cake));
+
+        CakeEntity cakeEntity = cakeMapperService.toEntity(cake);
+        CakeEntity saved = cakesService.createCake(cakeEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -119,7 +106,7 @@ public class CakesController {
             @ApiResponse(responseCode = "400", description = "Invalid data")
     })
     public ResponseEntity<CakeEntity> update(@PathVariable Integer id, @RequestBody CakeDto cake) {
-        return cakesService.updateCake(id, CakeMapper.toEntity(cake))
+        return cakesService.updateCake(id, cakeMapperService.toEntity(cake))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -138,9 +125,6 @@ public class CakesController {
         return ResponseEntity.notFound().build();
     }
 
-    private <T> ResponseEntity<?> buildResponseEntity(List<T> entityDTOs) {
-        if (entityDTOs.isEmpty())
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-        return ResponseEntity.ok(entityDTOs);
-    }
+
+
 }

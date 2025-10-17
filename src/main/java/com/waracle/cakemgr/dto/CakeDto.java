@@ -6,8 +6,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 @ToString
@@ -27,12 +28,17 @@ public class CakeDto implements Comparable<CakeDto>, Serializable {
     @Size(max = 300, message = "Image URL must not be longer than 300 characters")
     private String image;
 
+
+    public CakeDto(String title, String description, String image) {
+        this.employeeId = employeeId;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+    }
+
 	@Override
 	public int compareTo(CakeDto o) {
-		if (this.employeeId != null && o.employeeId != null) {
-			return this.employeeId.compareTo(o.employeeId);
-		}
-		return 0;
+        return (this.employeeId != null && o.employeeId != null) ?  this.employeeId.compareTo(o.employeeId) :0;
 	}
 
 

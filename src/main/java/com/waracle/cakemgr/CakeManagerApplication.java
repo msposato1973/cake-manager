@@ -4,6 +4,7 @@ import com.waracle.cakemgr.dao.CakeRepository;
 import com.waracle.cakemgr.model.CakeEntity;
 import com.waracle.cakemgr.service.CakesService;
 import com.waracle.cakemgr.utility.CakeImporterReader;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +26,11 @@ public class CakeManagerApplication {
 	private CakeImporterReader cakeImporterReader;
 
 	private static final Logger logger = LoggerFactory.getLogger(new Object(){}.getClass().getEnclosingClass());
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 
 	public static void main(String[] args) {

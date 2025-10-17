@@ -98,4 +98,53 @@ class CakesServiceImplTest extends BaseTest {
     }
 
 
+    @Test
+    void testSaveAll() {
+        CakeEntity cake1 = getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1");
+        CakeEntity cake2 = getBuildMockCakeEntity(2, "Cake2", "Description2", "Image2");
+        List<CakeEntity> cakes = List.of(cake1, cake2);
+
+        cakesService.saveAll(cakes);
+
+        verify(cakeRepository, times(1)).saveAll(cakes);
+        verify(cakeRepository, times(1)).flush();
+    }
+
+    @Test
+    void testUpdateCake_NullIdOrCake() {
+        Optional<CakeEntity> result1 = cakesService.updateCake(null, getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1"));
+        Optional<CakeEntity> result2 = cakesService.updateCake(1, null);
+
+        assertTrue(result1.isEmpty());
+        assertTrue(result2.isEmpty());
+        verify(cakeRepository, times(0)).findById(anyInt());
+        verify(cakeRepository, times(0)).save(any(CakeEntity.class));
+    }
+
+    @Test
+    void testUpdateCake_ExistingCake() {
+        CakeEntity newCake = getBuildMockCakeEntity(1, "Cake1", "Description1", "Image1");
+
+        when(cakeRepository.existsByTitleAndDescriptionAndImage(
+                newCake.getTitle(), newCake.getDescription(), newCake.getImage()
+        )).thenReturn(true);
+
+        Optional<CakeEntity> result = cakesService.updateCake(1, newCake);
+
+        assertTrue(result.isEmpty());
+        verify(cakeRepository, times(0)).findById(anyInt());
+        verify(cakeRepository, times(0)).save(any(CakeEntity.class));
+    }
+
+    @Test
+    void testDeleteCake_NotFound() {
+        when(cakeRepository.existsById(1)).thenReturn(false);
+
+        boolean result = cakesService.deleteCake(1);
+
+        assertFalse(result);
+        verify(cakeRepository, times(1)).existsById(1);
+        verify(cakeRepository, times(0)).deleteById(1);
+    }
+
 }
