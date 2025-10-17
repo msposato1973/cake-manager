@@ -1,6 +1,7 @@
 package com.waracle.cakemgr.service.impl;
 
 import com.waracle.cakemgr.dao.CakeRepository;
+import com.waracle.cakemgr.exception.ResourceNotFoundException;
 import com.waracle.cakemgr.model.CakeEntity;
 import com.waracle.cakemgr.service.CakesService;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class CakesServiceImpl implements CakesService {
 
     @Override
     public Optional<CakeEntity> getCakeById(Integer id) {
+
         return cakeRepository.findById(id);
     }
 
