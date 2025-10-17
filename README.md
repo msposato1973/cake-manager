@@ -68,8 +68,8 @@ http://localhost:8080/console/
 # Swagger UI accessible on:
 http://localhost:9090/actuator/swagger-ui/index.html
 
-Swagger UI will now display the 🔐 Authorize button. When you insert a Bearer token there, 
-all requests documented with @SecurityRequirement(name = "bearerAuth") 
+Swagger UI will now display the 🔐 Authorize button. When you insert a Bearer token there,
+all requests documented with @SecurityRequirement(name = "bearerAuth")
 will be sent with Authorization: Bearer <token> in the header.
 
 # Build IMAGE
@@ -97,18 +97,44 @@ curl -X PUT http://localhost:8282/cakes/1 -H "Content-Type: application/json" \
 # Delete a cake
 curl -X DELETE http://localhost:8282/cakes/1
 
+### Build the application with:
+    - mvn clean package -DskipTests
+    - Build the Docker image with:
+    - docker build -t cake-manager.
 
-## Build the application with:
-## mvn clean package -DskipTests
-## Build the Docker image with:
-## docker build -t cake-manager .
-## Run the Docker container with:
-## docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
-## To run the container with a specific database URL, use:
-## docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
-## To run the container with the default in-memory database, use:
-# docker run -p 8282:8282 cake-manager
-# To run the container with a specific Java option, use:
-# docker run -p 8282:8282 -e JAVA_OPTS="-Xmx512m" cake-manager
-# To run the container with a specific database URL and Java options, use:
-# docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db -e JAVA_OPTS="-Xmx512m" cake-manager
+### Run the Docker container with:
+    - docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
+    - To run the container with a specific database URL, use:
+    - docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db cake-manager
+    - To run the container with the default in-memory database, use:
+    - docker run -p 8282:8282 cake-manager
+    - To run the container with a specific Java option, use:
+    - docker run -p 8282:8282 -e JAVA_OPTS="-Xmx512m" cake-manager
+    - To run the container with a specific database URL and Java options, use:
+    - docker run -p 8282:8282 -e DB_URL=jdbc:hsqldb:file:./data/cake-manager-db -e JAVA_OPTS="-Xmx512m" cake-manager
+    - Access the application at:
+    - http://localhost:8282/
+
+### Access the HSQLDB console at:
+    - http://localhost:8080/console/
+
+### Access the Swagger UI at:
+    - http://localhost:9090/actuator/swagger-ui/index.html
+    - Use the following curl commands to interact with the API:
+
+### Get all cakes:
+    - curl http://localhost:8282/cakes/
+    - Get a specific cake by ID:
+    - curl http://localhost:8282/cakes/2
+
+### Add a new cake:
+    - curl -X POST http://localhost:8282/cakes -H "Content-Type: application/json" \
+    - -d '{"title": "Massimo Sposato sdded", "description": "test Add your name in the body massimo", "image": "https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg"}'
+
+### Update an existing cake:
+    - curl -X PUT http://localhost:8282/cakes/1 -H "Content-Type: application/json" \
+    - -d '{"title": "Massimo Sposato update", "description": "test Add your name in the body massimo", "image": "https://s3-eu-west-1.amazonaws.com/s3.mediafileserver.co.uk/carnation/WebFiles/RecipeImages/lemoncheesecake_lg.jpg"}'
+
+### Delete a cake:
+    - curl -X DELETE http://localhost:8282/cakes/1
+ 
